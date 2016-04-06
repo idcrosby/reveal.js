@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js – The HTML Presentation Framework</title>
+		<title>Living the Continuous Delivery Dream</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -40,6 +40,136 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+				<section>
+					<h3>Living the Continuous Delivery Dream</h3>
+					<aside class="notes">
+        				Who is doing CD? CI? Who wants to be?
+        				Let's start with defining some terms.
+    				</aside>
+				</section>
+				<section>
+					<section>
+						<h3>Continuous ... </h3>
+						<aside class="notes">
+							The goal here is continuity
+						</aside>
+					</section>
+					<section>
+						<h3>Continuous Integration</h3>
+						<aside class="notes">
+							Continuous Integration is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
+							So Git + Unit Tests + Jenkins
+						</aside>
+					</section>
+					<section>
+						<h3>Continuous Delivery</h3>
+						<aside class="notes">
+							[First]
+							Continuous Delivery is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time. It aims at building, testing, and releasing software faster and more frequently.
+
+							[Second]
+							The focus of this talk is Continuous Delivery.
+							I won’t go into the benefits of CD in this talk, these have been well established and there are plenty of blogs/papers/talks dispelling the many positives of implementing Continuous DeliveryAs , we are at the point where It is generally accepted that continuous delivery (if not continuous deployment) is where we should be as a mature software development team. So the logical question is why are we not all doing this already? We agree it’s the way forward, and understand the benefits and savings we’ll gain, so let’s implement this thing tomorrow!
+						</aside>
+					</section>
+					<section>
+						<h3>Continuous Deployment</h3>
+						<aside class="notes">
+							Continuous Deploymnet is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time. It aims at building, testing, and releasing software faster and more frequently.
+
+							*Scroll Up*
+						</aside>
+					</section>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+					```
+						$sudo apt-get install continuous-delivery
+					```
+					</script>
+					<aside class="notes">
+						Okay, that didn’t work. Because it’s not trivial to implement. Setting up a pipeline, migrating existing infrastructure, adding new tooling, all of this takes serious investment. And it can be hard to take the time out and/or to convince the necessary people to do this.
+
+						So let's jump back a little bit... how did we get here?
+					</aside>
+				</section>
+				<section>
+					<h1>A long time ago, in a galaxy far, far away...</h1>
+					<aside class="notes">
+						Back in ancient times we had this wonderful thing called waterfall, as developers we were blissful and ignorant, write some cobol, compile it (or assemble or whatever the fuck cobol does) and we’re done! No longer my problem. we heave it over the proverbial wall and let the QA/Test/Ops guys deal with it.  And inevitably it wouldn’t work on the test or integration environment, and someone comes knocking at our desk. And our response:
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h2>It works on my machine</h2>
+						<aside class="notes">
+							[First]
+							I don’t know what kind of crazy minecraft OS you’re running it on, but my code works. But that was the old way, we’re better than that now right? 
+						</aside>
+					</section>
+					<section>
+						<h1>Agile</h1>
+						<aside class="notes">
+							We’ve gone through agile and scrum eras and ...
+						</aside>
+					</section>
+					<section>
+						<h1>Dev Ops!</h1>
+						<aside class="notes">
+							We’re living in the dev ops period, so now when we toss the code over the wall, we’ve gotta run over there to catch it ourselves.
+						</aside>
+					</section>
+					<section>
+						<h2>It works on my machine</h2>
+						<aside class="notes">
+							[Second]
+							Why is this not valid statement? if it works on my machine, it should work in production?
+						</aside>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Development == Production<span class="fragment"> ...ish</span></h2>
+						<aside class="notes">
+							There are two main factors we need to achieve this.
+
+							I need to be running the same software on dev as I do on production. Not just the right version/branch/tag but using the same dependencies. So Docker solves this problem for us, we build a Docker image which use for development testing, and we use the same image on testing/staging/production.
+
+							I need to run my software on the same OS, of the same version, with the same libraries, etc. Again, Docker solves this for us, the image we build contains not just our code, but the OS as well.
+						</aside>
+					</section>
+				</section>
+				<section>
+					<h2>Orchestrate ALL the containers!!!</h2>
+					<aside class="notes">
+						External dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which the specific service we are developing must interact with and depend on. Docker helps us in this case, but it does not completely solve the problem.
+
+						As we increase the number of dependancies and the number of containers we need some sort of orchestration tool to maintain consistency within and across our environments. There are many of these tools available, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
+					</aside>
+				</section>
+				<section>
+					<h3>Kubernetes</h3>
+					<img data-src="img/kubernetes.png">
+					<aside class="notes">
+						I assume most people are already familiar with Kubernetes? If not, it's basically an orchestration platform for Containers.
+					</aside>
+				</section>
+				<section>
+					<h3>OpenShift</h3>
+					<img data-src="img/openshift.png">
+					<aside class="notes">
+						If you were at the Docker meetup back in November, Alessandro gave an introduction to OpenShift. For those not familiar with OpenShift, it is Red Hat's PaaS built on top of Kubernetes.
+					</aside>
+				</section>
+				<section>
+					<h1><a href="https://10.1.2.2:8443/">Demo</a></h1>
+					<aside class="notes">
+						I've seen many people pray to the demo gods, only to have those demos crash and burn. So I've actually become Demo God Agnostic. No prayers, no sacrifices...
+					</aside>
+				</section>
+
+
+
 				<section>
 					<h1>Reveal.js</h1>
 					<h3>The HTML Presentation Framework</h3>
@@ -392,7 +522,7 @@ Reveal.addEventListener( 'customevent', function() {
 				history: true,
 				center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
 
 				// Optional reveal.js plugins
 				dependencies: [

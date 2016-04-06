@@ -1,18 +1,15 @@
-FROM mhart/alpine-node:5.10.1
+FROM node:5.10.0
 
 # Prepare app directory
-#RUN mkdir -p /usr/src/app
-#ADD . /usr/src/app
+RUN mkdir -p /usr/src/app
 
 # Install dependencies
-#WORKDIR /usr/src/app
-WORKDIR /src
-ADD . .
-RUN npm install
-RUN npm install -g grunt-cli
+WORKDIR /usr/src/app
 
-# Build the app
-#RUN npm build
+COPY package.json /usr/src/app/
+RUN npm install
+
+COPY . /usr/src/app
 
 # Expose the app port
 EXPOSE 8000

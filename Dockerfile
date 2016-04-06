@@ -7,8 +7,8 @@ FROM mhart/alpine-node:5.10.1
 # Install dependencies
 #WORKDIR /usr/src/app
 WORKDIR /src
-RUN npm install
 ADD . .
+RUN npm install
 
 # Build the app
 #RUN npm build

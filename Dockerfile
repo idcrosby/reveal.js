@@ -9,6 +9,7 @@ FROM mhart/alpine-node:5.10.1
 WORKDIR /src
 ADD . .
 RUN npm install
+RUN npm install -g grunt-cli
 
 # Build the app
 #RUN npm build

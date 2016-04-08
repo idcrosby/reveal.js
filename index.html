@@ -59,33 +59,29 @@
 						<h3>Continuous Integration</h3>
 						<aside class="notes">
 							Continuous Integration is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
-							So Git + Unit Tests + Jenkins.
+							So many teams say we have Git, Unit Tests, and Jenkins. Great, we're doing CI. The tools themselves don't define the process. They enable you to adopt CI, but there is more required. You need to follow and buy in the paradigm.
 						</aside>
 					</section>
 					<section>
 						<h3>Continuous Deployment</h3>
 						<aside class="notes">
-							Continuous Deploymnet is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time. It aims at building, testing, and releasing software faster and more frequently.
-
-							
+							Continuous Deploymnet is in addition to CI, in which every change goes through your pipeline and automatically gets pushed into production. This results in several deployments to production per day.
 						</aside>
 					</section>
 					<section>
 						<h3>Continuous Delivery</h3>
 						<aside class="notes">
-							[First]
-							Continuous Delivery is a software engineering approach in which teams produce software in short cycles, ensuring that the software can be reliably released at any time. It aims at building, testing, and releasing software faster and more frequently.
+							Continuous Delivery is a software development discipline where you build software in such a way that the software can be released to production at any time. It aims at building, testing, and releasing software faster and more frequently.
 
 							So Continuous Delivery implies all the same requirements as Continuous Deployment, but the push to production step is optional. We are able and confident to push each change in production, but we may not necessarily do so. The choice to release software is essentially a business decision.
 
-							[Second]
 							The focus of this talk is Continuous Delivery.
 							I won’t go into the benefits of CD in this talk, these have been well established and there are plenty of blogs/papers/talks dispelling the many positives of implementing Continuous DeliveryAs , we are at the point where It is generally accepted that continuous delivery (if not continuous deployment) is where we should be as a mature software development team. So the logical question is why are we not all doing this already? We agree it’s the way forward, and understand the benefits and savings we’ll gain, so let’s implement this thing tomorrow!
 						</aside>
 					</section>
 				</section>
 				<section>
-					<section data-markdown>
+					<section data-transition="fade" data-markdown>
 						<script type="text/template">
 						```
 							$apt-get install continuous-delivery
@@ -93,7 +89,7 @@
 						</script>
 						^
 					</section>
-					<section data-transition="zoom-in convex-out" data-markdown data-notes="Okay, that didn’t work. Because it’s not trivial to implement. Setting up a pipeline, migrating existing infrastructure, adding new tooling, all of this takes serious investment. And it can be hard to take the time out and/or to convince the necessary people to do this. So what I want to focus on is how we can use existing tools, such as Docker, Kubernetes, to help us get there.
+					<section data-transition="fade" data-markdown data-notes="Okay, that didn’t work. Because it’s not trivial to implement. Setting up a pipeline, migrating existing infrastructure, adding new tooling, all of this takes serious investment. And it can be hard to take the time out and/or to convince the necessary people to do this. So what I want to focus on is how we can use existing tools, such as Docker, Kubernetes, to help us get there.
 
 					So let's jump back a little bit... how did we get here?">
 						<script type="text/template">
@@ -104,14 +100,14 @@
 					</section>
 				</section>
 				<section>
-					<h2>A long time ago, in a galaxy far, far away...</h2>
+					<h2>A long time ago, on a dev team far, far away...</h2>
 					<aside class="notes">
-						Back in ancient times we had this wonderful thing called waterfall, as developers we were blissful and ignorant, write some cobol, compile it (or assemble or whatever the fuck cobol does) and we’re done! No longer my problem. we heave it over the proverbial wall and let the QA/Test/Ops guys deal with it.  And inevitably it wouldn’t work on the test or integration environment, and someone comes knocking at our desk. And our response:
+						Back in ancient times we had this wonderful thing called waterfall, as developers we were blissful and ignorant, write some Fortran, compile it (or assemble or whatever the hell you do with Fortran) and I'm done! No longer my problem. we heave it over the proverbial wall and let the QA/Test/Ops guys deal with it.  And inevitably it wouldn’t work on the test or integration environment, and someone comes knocking at our desk. And our response:
 					</aside>
 				</section>
 				<section>
 					<section>
-						<h2>It works on my machine</h2>
+						<h2>"It works on my machine"</h2>
 						<aside class="notes">
 							[First]
 							I don’t know what kind of crazy minecraft OS you’re running it on, but my code works. But that was the old way, we’re better than that now right? 
@@ -132,49 +128,53 @@
 					<section>
 						<h2>It works on my machine</h2>
 						<aside class="notes">
-							[Second]
-							Why is this not valid statement? if it works on my machine, it should work in production?
+							Why is this not valid statement? if it works on my machine, why shouldn't it work in production? We're not bad developers. We write sensible code, usually, so if my application is running on my local environment and I'm happy with it, it should be reasonable to assume it can run in prod with confidence. So how do we get this confidence? 
 						</aside>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Development == Production<span class="fragment"> ...ish</span></h2>
+						<h3>Development == Production<span class="fragment"> ...ish</span></h3>
 						<aside class="notes">
-							There are two main factors we need to achieve this.
-
 							I need to be running the same software on dev as I do on production. Not just the right version/branch/tag but using the same dependencies. So Docker helps to solve this problem for us, we build a Docker image which use for development testing, and we use the same image on testing/staging/production.  Docker in itself cannot solve this for us, but it helps. And that is the focus here, is that we now have tooling which makes Continuous Delivery easier to achieve.
 
-							I need to run my software on the same OS, of the same version, with the same libraries, etc. Again, Docker solves this for us, the image we build contains not just our code, but the OS as well.
+							I need to run my software on the same OS, of the same version, with the same libraries, etc. Again, Docker helps us to sovle this, the image we build contains not just our code, but the OS as well.
+
+							What about external dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which the specific service we are developing must interact with and depend on. Docker helps us in this case, but it does not completely solve the problem.
 						</aside>
 					</section>
 				</section>
 				<section>
-					<h2>Orchestrate ALL the containers!!!</h2>
+					<h2>Orchestrate ALL the things!</h2>
 					<aside class="notes">
-						External dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which the specific service we are developing must interact with and depend on. Docker helps us in this case, but it does not completely solve the problem.
-
 						As we increase the number of dependancies and the number of containers we need some sort of orchestration tool to maintain consistency within and across our environments. There are many of these tools available, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
 					</aside>
 				</section>
 				<section>
 					<h3>Kubernetes</h3>
-					<img data-src="img/kubernetes.png">
+					<img src="img/kubernetes.png" style="border-style: none">
 					<aside class="notes">
-						I assume most people are already familiar with Kubernetes? If not, it's basically an orchestration platform for Containers.
+						I assume most people are already familiar with Kubernetes? For those who aren't, it's basically an orchestration platform for Containers. 
 					</aside>
 				</section>
 				<section>
 					<h3>OpenShift</h3>
-					<img data-src="img/openshift.png">
+					<img src="img/openshift.png" style="border-style: none">
 					<aside class="notes">
 						If you were at the Docker meetup back in November, Alessandro gave an introduction to OpenShift. For those not familiar with OpenShift, it is Red Hat's PaaS built on top of Kubernetes.
 					</aside>
 				</section>
 				<section>
-					<h1><a href="https://10.1.2.2:8443/">Demo</a></h1>
+					<h1><a href="https://10.1.2.2:8443/" target="_blank">Demo</a></h1>
 					<aside class="notes">
 						I've seen many people pray to the demo gods, only to have those demos crash and burn. So I've actually become Demo God Agnostic. No prayers, no sacrifices...
+					</aside>
+				</section>
+				<section>
+					<h2>We're Hiring</h2>
+					<img src="img/cs-logo.png" height="200" style="border-style: none">
+					<aside class="notes">
+						yup. 
 					</aside>
 				</section>
 			</div>

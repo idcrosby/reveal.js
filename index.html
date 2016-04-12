@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -43,10 +43,12 @@
 				<section>
 					<h2>Living the Continuous Delivery Dream</h2>
 					<aside class="notes">
-						Thanks to Werker etc...
-        				Who here currently is doing Continuous Integration? What about Continuous Delivery? And Continuous Deployment? ANd of those who did not raise your hands, does anyone feel that they shouldn't or don't want to implement CD?
-        				Ok just want to make sure I'm not speaking to the wrong crowd.
-        				Let's start with defining some terms.
+						Thanks to Implicit Explicit, Werker etc...
+        				So before I start, who here currently is doing Continuous Integration at their company? What about Continuous Delivery (Okay, you can leave)? And is anyone doing Continuous Deployment? And for everyone else, who is working to implement Continuous Integration or Delivery at their company, or would like to? So this should be everyone?
+        				
+        				Ok just want to make sure I'm speaking to the right crowd.
+        				
+        				So I want to start with defining some terms.
     				</aside>
 				</section>
 				<section>
@@ -59,30 +61,35 @@
 					<section>
 						<h3>Continuous Integration</h3>
 						<aside class="notes">
-							Continuous Integration is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
-							So many teams say we have Git, Unit Tests, and Jenkins. Great, we're doing CI. The tools themselves don't define the process. They enable you to adopt CI, but there is more required. You need to follow and buy in the paradigm.
+							Continuous Integration is defined as a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
+							
+							So many teams say we have Git, Unit Tests, and Jenkins. Great, we're doing CI. 
+
+							The tools themselves don't equal the process. They enable you to adopt CI, but there is more required. You need to follow and buy in to the paradigm.
 						</aside>
 					</section>
 					<section>
 						<h3>Continuous Deployment</h3>
 						<aside class="notes">
-							Continuous Deploymnet is in addition to CI, in which every change goes through your pipeline and automatically gets pushed into production. This results in several deployments to production per day.
+							Continuous Deployment is an additional layer built on top of CI, in which every change that goes through your pipeline, automated builds, tests, etc, then gets pushed straight into production automatically. 
+
+							So teams doing Continuous Deployment, such as Etsy, end of deploying to production 10, 15, or even more times a day.
 						</aside>
 					</section>
 					<section>
 						<h3>Continuous Delivery</h3>
 						<aside class="notes">
-							Continuous Delivery is a software development discipline where you build software in such a way that the software can be released to production at any time. It aims at building, testing, and releasing software faster and more frequently.
+							So Continuous Delivery includes all the same requirements as Continuous Deployment, but the push to production step is left optional. We are able and confident to push each change in production, but we may not necessarily do so. The choice to release software is essentially a business decision.
 
-							So Continuous Delivery implies all the same requirements as Continuous Deployment, but the push to production step is optional. We are able and confident to push each change in production, but we may not necessarily do so. The choice to release software is essentially a business decision.
+							The goal of CD is to build software in such a way that it can be released to production at any time. It aims at building, testing, and releasing software faster and more frequently.
 
 							The focus of this talk is Continuous Delivery.
-							I won’t go into the benefits of CD in this talk, these have been well established and there are plenty of blogs/papers/talks dispelling the many positives of implementing Continuous DeliveryAs , we are at the point where It is generally accepted that continuous delivery (if not continuous deployment) is where we should be as a mature software development team. So the logical question is why are we not all doing this already? We agree it’s the way forward, and understand the benefits and savings we’ll gain, so let’s implement this thing tomorrow!
+							I won’t go into the benefits of CD in this talk, these have been well established and there are plenty of blogs/papers/talks dispelling the many positives of implementing Continuous Delivery. As we have seen from the questions earlier, we are at the point where It is generally accepted that continuous delivery is where we should be as a mature software development team. So the logical question is why are we not all doing this already? We agree it’s the way forward, and understand the benefits and savings we’ll gain, so let’s implement this!
 						</aside>
 					</section>
 				</section>
 				<section>
-					<section data-transition="fade" data-markdown>
+					<section data-transition="fade" data-markdown data-notes="Bam! Well that's obviously not going to work...">
 						<script type="text/template">
 						```
 							$apt-get install continuous-delivery
@@ -90,9 +97,11 @@
 						</script>
 						^
 					</section>
-					<section data-transition="fade" data-markdown data-notes="Okay, that didn’t work. Because it’s not trivial to implement. Setting up a pipeline, migrating existing infrastructure, adding new tooling, all of this takes serious investment. And it can be hard to take the time out and/or to convince the necessary people to do this. So what I want to focus on is how we can use existing tools, such as Docker, Kubernetes, to help us get there.
+					<section data-transition="fade" data-markdown data-notes="Because it’s not trivial to implement. Setting up a pipeline, migrating existing infrastructure, adding new tooling, all of this takes serious investment. And it can be hard to take the time out and/or to convince the necessary people to do this. 
 
-					So let's jump back a little bit... how did we get here?">
+					So what I want to focus on is how we can use existing tools, such as Docker, Kubernetes, to help us get there.
+
+					First, let's jump back a little bit... how did we get to where we are?">
 						<script type="text/template">
 						```
 							$sudo apt-get install continuous-delivery
@@ -103,14 +112,15 @@
 				<section>
 					<h2>A long time ago, on a dev team far, far away...</h2>
 					<aside class="notes">
-						Back in ancient times we had this wonderful thing called waterfall, as developers we were blissful and ignorant, write some Fortran, compile it (or assemble or whatever the hell you do with Fortran) and I'm done! No longer my problem. we heave it over the proverbial wall and let the QA/Test/Ops guys deal with it.  And inevitably it wouldn’t work on the test or integration environment, and someone comes knocking at our desk. And our response:
+						Back in ancient times we had this wonderful thing called waterfall, as developers we were blissful and ignorant, write some Fortran, compile it (or assemble or whatever the hell you do with Fortran) and I'm done! No longer my problem. I throw it over the proverbial wall and let the QA/Test/Ops guys deal with it. On to the next thing...
+
+						But inevitably someone would come knocking on our desk, "You broke the build", "The integration tests are failing",  . And what would our response be...
 					</aside>
 				</section>
 				<section>
 					<section>
 						<h2>"It works on my machine"</h2>
 						<aside class="notes">
-							[First]
 							I don’t know what kind of crazy minecraft OS you’re running it on, but my code works. But that was the old way, we’re better than that now right? 
 						</aside>
 					</section>
@@ -123,7 +133,7 @@
 					<section>
 						<h1>Dev Ops!</h1>
 						<aside class="notes">
-							We’re living in the dev ops period, so now when we toss the code over the wall, we’ve gotta run over there to catch it ourselves.
+							We’re living in the dev ops period, so now when we toss the code over the wall, we’ve gotta run over there to catch it ourselves. So we understand that their are other dependencies, and pieces involved in the process.
 						</aside>
 					</section>
 					<section>
@@ -137,11 +147,13 @@
 					<section>
 						<h3>Development == Production<span class="fragment"> ...ish</span></h3>
 						<aside class="notes">
+							We need our development environments to be identical to our produciton environments... or at least close.
+
 							I need to be running the same software on dev as I do on production. Not just the right version/branch/tag but using the same dependencies. So Docker helps to solve this problem for us, we build a Docker image which use for development testing, and we use the same image on testing/staging/production.  Docker in itself cannot solve this for us, but it helps. And that is the focus here, is that we now have tooling which makes Continuous Delivery easier to achieve.
 
 							I need to run my software on the same OS, of the same version, with the same libraries, etc. Again, Docker helps us to sovle this, the image we build contains not just our code, but the OS as well.
 
-							What about external dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which the specific service we are developing must interact with and depend on. Docker helps us in this case, but it does not completely solve the problem.
+							What about external dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which our service, our application we are developing needs to interact with and depend on. So here we are moving into territory where Docker itself isn't quite enough for us, even if we containerize all of our micro services, how do we control them?
 						</aside>
 					</section>
 				</section>
@@ -155,7 +167,7 @@
 					<h3>Kubernetes</h3>
 					<img src="img/kubernetes.png" style="border-style: none">
 					<aside class="notes">
-						I assume most people are already familiar with Kubernetes? For those who aren't, it's basically an orchestration platform for Containers. 
+						I assume most people are already familiar with Kubernetes? For those who aren't, it's basically an orchestration platform for Containers. It allows for automated deployment, scaling of our application
 					</aside>
 				</section>
 				<section>

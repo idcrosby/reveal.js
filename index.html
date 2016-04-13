@@ -62,7 +62,7 @@
 							- Continuous Integration is defined as a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
 							
 							- So many teams say we have Git, Unit Tests, and Jenkins. Great, we're doing CI. This is obivously not the case.
-							
+
 							- The tools themselves don't equal the process. They enable you to adopt CI, but there is more required. You need to follow and buy in to the paradigm.
 						</aside>
 					</section>
@@ -174,11 +174,11 @@ First, let's jump back a little bit... how did we get to where we are?">
 					</aside>
 				</section>
 				<section>
-					<img src="img/openshift-logo.png" height="300" style="border-style: none">
+					<a href="https://10.1.2.2:8443/" target="_blank"><img src="img/openshift-logo.png" height="300" style="border-style: none"></a>
 					<aside class="notes" data-markdown>
-						- If you were at the Docker meetup back in November, Alessandro gave a great overview of OpenShift (How many people were there?). For those not familiar with OpenShift I will give a quick overview, it is Red Hat's PaaS built on top of Kubernetes.
+						- If you were at the Docker meetup back in November, Alessandro gave a great overview of OpenShift (How many people were there?). For those not familiar with OpenShift I will give a quick overview, it is Red Hat's Orchestration PaaS built on top of Kubernetes.
 
-						- The OpenShift platform provides an advanced orchestration layer for containers, built on top of Kubernetes. It can be run both on-premise or on your choice of cloud. OpenShift takes a lot of the pain out of developing, deploying and scaling microservices. Out-of-the-box features include cross-host networking, container scheduling, automatic scaling and health checking.
+						- It can be run both on-premise or on your choice of cloud. OpenShift takes a lot of the pain out of developing, deploying and scaling microservices. Out-of-the-box features include cross-host networking, container scheduling, automatic scaling and health checking.
 
 						- The Red Hat Container Development Kit (CDK) provides a Vagrant VM for quickly getting started with the Red Hat container stack. The CDK includes Atomic App and an OpenShift installation, so complex, multi-container apps can be run locally in an environment closely resembling production. Other features include integration with the Eclipse IDE, allowing you to develop and launch containers from within the editor’s environment.
 
@@ -222,6 +222,7 @@ First, let's jump back a little bit... how did we get to where we are?">
 				center: true,
 
 				transition: 'convex', // none/fade/slide/convex/concave/zoom
+				// parallaxBackgroundImage: '/img/cats.jpg',
 
 				// Optional reveal.js plugins
 				dependencies: [

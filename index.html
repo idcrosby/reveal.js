@@ -44,6 +44,7 @@
 					<h2>Living the Continuous Delivery Dream</h2>
 					<aside class="notes" data-markdown>
 						- Thanks to Implicit Explicit for organizing, Werker for hosting and drinks.
+						- I work at Container Solutions... 
 						- So before I start, who here currently is doing Continuous Integration at their company? What about Continuous Delivery (Okay, you can leave)? And is anyone doing Continuous Deployment? And for everyone else, who is working to implement Continuous Integration or Delivery at their company, or would like to? So this should be everyone?
 						- Ok just want to make sure I'm speaking to the right crowd.
 						- I want to start with defining some terms.
@@ -166,7 +167,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 					<h2>Orchestrate</h2>
 					<img class="fragment" src="img/allTheThings.png" style="border-style: none" aight="right">
 					<aside class="notes" data-markdown>
-						As we increase the number of dependancies and the number of containers we need some sort of orchestration tool to maintain consistency within and across our environments. There are many new tools and platforms being developed in this space, such as Deis which we will see later on, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
+						- We need to orchestrate, and we need to orchestrate all the things.
+						- As we increase the number of dependancies and the number of containers we need some tools to maintain consistency within and across our environments. 
+						- There are many new tools and platforms being developed in this space, such as Deis which we will see later on, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
 					</aside>
 				</section>
 				<section>
@@ -183,9 +186,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 					<aside class="notes" data-markdown>
 						- If you were at the Docker meetup back in November, Alessandro gave a great overview of OpenShift (How many people were there?). For those not familiar with OpenShift I will give a quick overview, it is Red Hat's Orchestration PaaS built on top of Kubernetes.
 
-						- It can be run either on-premise or on your choice of cloud and it helps with developing, deploying and scaling microservices with features like cross-host networking, container scheduling, automatic scaling and health checking.
+						- It can be run either on-premise or on your choice of cloud and it helps with deploying and scaling microservices with features like cross-host networking, container scheduling, automatic scaling and health checking out of the box, which we need.
 
-						- The Red Hat Container Development Kit (CDK) provides a Vagrant VM for quickly getting started with the Red Hat container stack. The CDK includes OpenShift installation, multi-container apps can be run locally in an environment closely resembling production. Other features include integration with the Eclipse IDE, allowing you to develop and launch containers from within the editor’s environment.
+						- A really nice product which Red Hat came out along side OpenShift is called the Container Development Kit (or CDK) and basically they take an OpenShift platform and squeeze it into a single Vagrant VM for. This brings us back to the idea of getting our development environment identical to production. This way, when I run my applications locally in my CDK, I can have a strong degree of confidence that this will behave the same way across staging, and production. It was just recently announced that they will offer this product for free.
 
 						- So this talk is about living the continuous delivery dream, not just talking about it. My presentation is currently running inside a Docker container, on my OpenShift CDK. 
 					</aside>
@@ -193,7 +196,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 				<section>
 					<img src="img/openshift.png" style="border-style: none">
 					<aside class="notes" data-markdown>
-						- Let's take a look at OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. 
+						- So what would this look like in a real scenario where I want to deploy my application across multiple environments.
+
+						- OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. 
 
 						- This is a very interesting approach, running multiple environments one cluster. Through OpenShift we can maintain resource isolation, by dedicating nodes to specific environments. This means you will have one OpenShift cluster with common masters for all environments, but dedicated nodes assigned to specific environments. This allows for scenarios such as only allowing production projects to run on the more powerful / expensive nodes. Additionally the registry is shared across all environments.
 					</aside>
@@ -205,8 +210,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 					</aside>
 				</section>
 				<section>
-					<h2>We're Hiring</h2>
+					<h2>Questions?</h2>
 					<img src="img/cs-logo.png" height="200" style="border-style: none">
+					<h4>We're Hiring</h4>
 					<aside class="notes" data-markdown>
 						yup. 
 					</aside>

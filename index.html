@@ -148,6 +148,7 @@ First, let's jump back a little bit... how did we get to where we are?">
 				<section>
 					<section>
 						<h3>Development == Production<span class="fragment"> ...ish</span></h3>
+						<img class="fragment" src="img/dockerLogo.png" style="border-style: none" aight="right">
 						<aside class="notes" data-markdown>
 							- We need our development environments to be identical to our produciton environments... or at least close.
 
@@ -155,7 +156,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 
 							- I need to run my software on the same OS, of the same version, with the same libraries, etc. Again, Docker helps us to sovle this, the image we build contains not just our code, but the OS as well.
 
-							- What about external dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which our service, our application we are developing needs to interact with and depend on. So here we are moving into territory where Docker itself isn't quite enough for us, even if we containerize all of our micro services, how do we control them?
+							- What about external dependencies. So databases, how do we ensure we are developing against the same database as we will run in production?  As we move into a micro services architecture, there are more and more dependencies which our service, our application we are developing needs to interact with and depend on. Also, our applications  will be running not just on a single server but across several nodes
+
+							- So here we are moving into territory where Docker itself isn't quite enough for us, even if we containerize all of our micro services, how do we control them?
 						</aside>
 					</section>
 				</section>
@@ -163,14 +166,16 @@ First, let's jump back a little bit... how did we get to where we are?">
 					<h2>Orchestrate</h2>
 					<img class="fragment" src="img/allTheThings.png" style="border-style: none" aight="right">
 					<aside class="notes" data-markdown>
-						As we increase the number of dependancies and the number of containers we need some sort of orchestration tool to maintain consistency within and across our environments. There are many of these tools available, such as Deis, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
+						As we increase the number of dependancies and the number of containers we need some sort of orchestration tool to maintain consistency within and across our environments. There are many new tools and platforms being developed in this space, such as Deis which we will see later on, I will take a look at Kubernetes as well as Red Hat’s OpenShift platform which is built on top of k8s.
 					</aside>
 				</section>
 				<section>
 					<h3>Kubernetes</h3>
 					<img src="img/kubernetes.png" style="border-style: none">
 					<aside class="notes" data-markdown>
-						I assume most people are already familiar with Kubernetes? For those who aren't, it's basically an orchestration platform for Containers. It is a system for managing containerized applications across a cluster of nodes, and allows for such features as automated deployment and scaling of your applications.
+						- I assume most people are already familiar with Kubernetes? For those who aren't, it's basically an orchestration platform for Containers. It was originally developed by Google, it was then open sourced and has recently been donated to the CNCF Linux Foundation. 
+						
+						- Kubernetes is a system for managing containerized applications across a cluster of nodes, and allows for such features as automated deployment and scaling of your applications.
 					</aside>
 				</section>
 				<section>
@@ -178,9 +183,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 					<aside class="notes" data-markdown>
 						- If you were at the Docker meetup back in November, Alessandro gave a great overview of OpenShift (How many people were there?). For those not familiar with OpenShift I will give a quick overview, it is Red Hat's Orchestration PaaS built on top of Kubernetes.
 
-						- It can be run both on-premise or on your choice of cloud. OpenShift takes a lot of the pain out of developing, deploying and scaling microservices. Out-of-the-box features include cross-host networking, container scheduling, automatic scaling and health checking.
+						- It can be run either on-premise or on your choice of cloud and it helps with developing, deploying and scaling microservices with features like cross-host networking, container scheduling, automatic scaling and health checking.
 
-						- The Red Hat Container Development Kit (CDK) provides a Vagrant VM for quickly getting started with the Red Hat container stack. The CDK includes Atomic App and an OpenShift installation, so complex, multi-container apps can be run locally in an environment closely resembling production. Other features include integration with the Eclipse IDE, allowing you to develop and launch containers from within the editor’s environment.
+						- The Red Hat Container Development Kit (CDK) provides a Vagrant VM for quickly getting started with the Red Hat container stack. The CDK includes OpenShift installation, multi-container apps can be run locally in an environment closely resembling production. Other features include integration with the Eclipse IDE, allowing you to develop and launch containers from within the editor’s environment.
 
 						- So this talk is about living the continuous delivery dream, not just talking about it. My presentation is currently running inside a Docker container, on my OpenShift CDK. 
 					</aside>
@@ -188,7 +193,9 @@ First, let's jump back a little bit... how did we get to where we are?">
 				<section>
 					<img src="img/openshift.png" style="border-style: none">
 					<aside class="notes" data-markdown>
-						- OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. If you run a separate OpenShift PaaS for each environment, they will each have their own dedicated and isolated resources. However, multiple environments can safely run on one OpenShift cluster through the platform’s support for resource isolation, which allows nodes to be dedicated to specific environments. This means you will have one OpenShift cluster with common masters for all environments, but dedicated nodes assigned to specific environments. This allows for scenarios such as only allowing production projects to run on the more powerful / expensive nodes.
+						- OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. 
+
+						- This is a very interesting approach, running multiple environments one cluster. Through OpenShift we can maintain resource isolation, by dedicating nodes to specific environments. This means you will have one OpenShift cluster with common masters for all environments, but dedicated nodes assigned to specific environments. This allows for scenarios such as only allowing production projects to run on the more powerful / expensive nodes. Additionally the registry is shared across all environments.
 					</aside>
 				</section>
 				<section>

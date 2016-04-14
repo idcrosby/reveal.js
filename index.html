@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+		<link rel="stylesheet" href="css/theme/blood.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -193,7 +193,7 @@ First, let's jump back a little bit... how did we get to where we are?">
 				<section>
 					<img src="img/openshift.png" style="border-style: none">
 					<aside class="notes" data-markdown>
-						- OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. 
+						- Let's take a look at OpenShift supports different setups, it is possible to run a completely separate cluster for each environment (e.g. dev, staging, production) or use a single cluster for several environments. 
 
 						- This is a very interesting approach, running multiple environments one cluster. Through OpenShift we can maintain resource isolation, by dedicating nodes to specific environments. This means you will have one OpenShift cluster with common masters for all environments, but dedicated nodes assigned to specific environments. This allows for scenarios such as only allowing production projects to run on the more powerful / expensive nodes. Additionally the registry is shared across all environments.
 					</aside>
